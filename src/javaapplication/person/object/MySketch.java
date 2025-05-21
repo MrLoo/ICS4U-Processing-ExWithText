@@ -12,6 +12,8 @@ import processing.core.PApplet;
 
 public class MySketch extends PApplet {
   private Person person; // declare a person object
+  String userInput = "";
+  int stage =0;
  
   
   public void settings() {
@@ -20,15 +22,48 @@ public class MySketch extends PApplet {
 
   public void setup() {
     background(255); // set the background color to white
-    // create a person object in the center of the screen
+        textSize(20);
     person = new Person(this, width/2, height/2, "Mr. Loo", 99); 
   }
   
   public void draw() {
-    background(255); // clear the screen
-    person.move(1, 0); // move the person to the right
-    person.draw(); // draw the person on the screen
+   background(255);
+    
+    if (stage == 0) {
+      fill(0);
+      text("Enter text:", 20, 50);
+      text(userInput, 20, 100);
+    } else if (stage == 1) {
+      person.draw();
+
+      if (keyPressed) {
+        if (keyCode == LEFT) {
+          person.move(-5, 0);
+        } else if (keyCode == RIGHT) {
+          person.move(5, 0);
+        } else if (keyCode == UP) {
+          person.move(0, -5);
+        } else if (keyCode == DOWN) {
+          person.move(0, 5);
+        }
+      }
+
   }
 }
+  
+  public void keyPressed() {
+    if (stage == 0) {
+      if (keyCode == BACKSPACE) {
+        if (userInput.length() > 0) {
+          userInput = userInput.substring(0, userInput.length() - 1);
+        }
+      } else if (keyCode == ENTER) {
+        stage = 1; // Move to next stage
+      } else if (key != CODED) {
+        userInput += key;
+      }
+    }
+  }
 
+}
 
