@@ -48,8 +48,8 @@ public class MySketch extends PApplet {
         }
       }
 
-  }
-}
+    }
+    }
   
   public void keyPressed() {
     if (stage == 0) {
